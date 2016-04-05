@@ -14,7 +14,7 @@ import model.db.exception.DatabaseAccessError;
 /**
  * Servlet implementation class LoginServlet
  */
-@WebServlet("/LoginServlet")
+@WebServlet("/login")
 public class LoginServlet extends BaseServlet {
 	
 	private static final long serialVersionUID = 1L;
@@ -24,9 +24,6 @@ public class LoginServlet extends BaseServlet {
 	 */
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		
-		
-		
 		new TableSetup();
 		PrintWriter out = response.getWriter();
 		out.println("ok");
@@ -39,7 +36,8 @@ public class LoginServlet extends BaseServlet {
 			loginOk = UserDB.checkLogin(login, password);
 			out.println(loginOk);
 		} catch (DatabaseAccessError e) {
-			out.println("Sorry: " + e.getMessage());
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 

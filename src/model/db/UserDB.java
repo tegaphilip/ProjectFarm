@@ -10,11 +10,14 @@ import model.Evaluator;
 import model.Owner;
 import model.User;
 import model.db.exception.DatabaseAccessError;
+import util.Password;
 
 public class UserDB {
 
 	static final String USER_TYPE_OWNER = "owner";
 	static final String USER_TYPE_EVALUATOR = "evaluator";
+	
+	static String lastErrorMessage = "";
 	
 	private static Map<String, User> users;
 
@@ -33,12 +36,18 @@ public class UserDB {
 		users.put("george@geek.com", new Evaluator("george@geek.com", "George Papalodeminus", "456"));
 	}
 
-	public static boolean checkLogin(String login, String password) throws DatabaseAccessError {
-
-		User u = users.get(login);
-		if (u == null)
+	public static boolean checkLogin(String login, String password) throws DatabaseAccessError{
+		User u = UserDB.findUser(login);
+		if (u == null) {
 			return false;
-		return u.getPassword().equals(password);
+		}
+		
+		try {
+			return Password.check(password, u.getPassword());
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
 	}
 
 	public static User getUser(String login) throws DatabaseAccessError {
@@ -50,14 +59,14 @@ public class UserDB {
 	}
 
 	public static Owner getOwner(String login) throws DatabaseAccessError {
-		User u = users.get(login);
+		User u = UserDB.findUser(login);
 		if (u == null || !(u instanceof Owner))
 			return null;
 		return (Owner) u;
 	}
 
 	public static Evaluator getEvaluator(String login) throws DatabaseAccessError {
-		User u = users.get(login);
+		User u = UserDB.findUser(login);
 		if (u == null || !(u instanceof Evaluator))
 			return null;
 		return (Evaluator) u;
@@ -81,11 +90,14 @@ public class UserDB {
 				}
 			} 
 		} catch (SQLException e) {
-			
+			e.printStackTrace();
 		}
 		return null;
 	}
 	
+	public static boolean createUser(HashMap<String, String> userParams) {
+		return QueryHelper.createUser(userParams);
+	}
 	
 	public static HashMap <Integer, String> getUserTypes() {
 		HashMap< Integer, String> map = new HashMap<>();
@@ -100,5 +112,9 @@ public class UserDB {
 			
 		}
 		return map;
+	}
+	
+	public static String getLastErrorMessage() {
+		return UserDB.lastErrorMessage;
 	}
 }

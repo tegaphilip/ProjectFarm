@@ -75,4 +75,7 @@ public class SQLQueries
 			+ "WHERE email = ?";
 	
 	static final String FIND_ALL_USER_TYPES = "SELECT * FROM " + USER_TYPE_TABLE;
+	
+	static final String CREATE_USER = "INSERT INTO users (name, email, password, user_type, created_at, updated_at)"
+			+ "VALUES (?, ?, ?, ? , ?, ?)";
 }
