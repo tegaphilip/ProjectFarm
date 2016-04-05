@@ -36,17 +36,20 @@ public class UserDB {
 		users.put("george@geek.com", new Evaluator("george@geek.com", "George Papalodeminus", "456"));
 	}
 
-	public static boolean checkLogin(String login, String password) throws DatabaseAccessError{
+	public static User checkLogin(String login, String password) throws DatabaseAccessError{
 		User u = UserDB.findUser(login);
 		if (u == null) {
-			return false;
+			return null;
 		}
 		
 		try {
-			return Password.check(password, u.getPassword());
+			 if (Password.check(password, u.getPassword())) {
+				 return u;
+			 }
+			 return null;
 		} catch (Exception e) {
 			e.printStackTrace();
-			return false;
+			return null;
 		}
 	}
 

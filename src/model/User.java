@@ -5,16 +5,21 @@ import java.io.Serializable;
 public abstract class User implements Serializable {
 
 	private static final long serialVersionUID = -5822209320482420372L;
+	
+	public static final String USER_TYPE_OWNER = "owner";
+	public static final String USER_TYPE_EVALUATOR = "evaluator";
 
 	private String email;
 	private String name;
 
 	private String password;
+	private String userType;
 
-	public User(String email, String name, String password) {
+	public User(String email, String name, String password, String userType) {
 		setEmail(email);
 		setName(name);
 		setPassword(password);
+		setUserType(userType);
 	}
 
 	public String getEmail() {
@@ -39,6 +44,14 @@ public abstract class User implements Serializable {
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+	
+	public String getUserType() {
+		return userType;
+	}
+	
+	public void setUserType(String userType) {
+		this.userType = userType;
 	}
 
 	@Override

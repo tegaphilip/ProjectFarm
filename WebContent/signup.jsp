@@ -8,17 +8,30 @@
 
 <h4>Registration</h4>
 		<div class="panel panel-primary">
-			<div class="panel-heading">Register</div>
+			<div class="panel-heading">
+				Register
+			</div>
 			<div class="panel-body">
-				<form role="form" action="/JEECourse/module02/example01">
+				<form method="post" role="form" action="<%= request.getContextPath()%>/register">
+					<div>
+						<% 
+							Object error = request.getAttribute("error_message");
+							Object success = request.getAttribute("created");
+							if (success != null) {
+								out.print("<p class='alert-success'>User has successfully registered. <a href = '"+ request.getContextPath() +"'>Click here to login</a></p>");
+							} else if (error != null) {
+								out.print("<p class='alert-danger'>" + error + "</p>");
+							}
+						%>
+					</div>
 					<div class="form-group">
 						<label for="name">Name:</label> 
 						<input type="text" class="form-control" name="name" required="required">
 					</div>
 					
 					<div class="form-group">
-						<label for="name">Email:</label> 
-						<input type="email" class="form-control" name="name" required="required">
+						<label for="email">Email:</label> 
+						<input type="email" class="form-control" name="email" required="required">
 					</div>
 					<div class="form-group">
 						<label for="password">Password:</label> 

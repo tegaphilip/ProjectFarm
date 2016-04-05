@@ -180,7 +180,7 @@ public class GeneralTest {
 	@Test
 	public void testUserDB() {
 		try {
-			if (UserDB.checkLogin("george@geek.com", "4456") == true) {
+			if (UserDB.checkLogin("george@geek.com", "4456") != null) {
 				fail("error checking password");
 			}
 		} catch (DatabaseAccessError e) {
@@ -188,7 +188,7 @@ public class GeneralTest {
 		}
 
 		try {
-			if (UserDB.checkLogin("george@geek.com", "456") == false) {
+			if (UserDB.checkLogin("george@geek.com", "456") == null) {
 				fail("error checking password");
 			}
 		} catch (DatabaseAccessError e) {
