@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Context path="/ProjectFarm">
+
+	<Resource auth="Container"
+		driverClassName="com.mysql.jdbc.Driver" 
+		maxActive="20"
+		maxIdle="10" 
+		maxWait="-1" 
+		name="jdbc/ProjectFarmMysql" 
+		type="javax.sql.DataSource"
+		url="jdbc:mysql://localhost/farm" 
+		username="root"
+		password="" />
+		
+	<Resource auth="Container"
+		driverClassName="org.sqlite.JDBC" 
+		maxActive="20"
+		maxIdle="10" 
+		maxWait="-1" 
+		username="root"
+		password=""
+		name="jdbc/ProjectFarmSqLite" 
+		type="javax.sql.DataSource"
+		url="jdbc:sqlite:farm.db"/>
+
+</Context>
