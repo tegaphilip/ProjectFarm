@@ -13,6 +13,7 @@ import util.Password;
 public class UserDB extends BaseDB{
 
 	static final String USER_TYPE_OWNER = "owner";
+	
 	static final String USER_TYPE_EVALUATOR = "evaluator";
 
 	public static User checkLogin(String login, String password) throws DatabaseAccessError{
@@ -54,7 +55,6 @@ public class UserDB extends BaseDB{
 		return (Evaluator) u;
 	}
 	
-	
 	public static User findUser(String login) {
 		HashMap< Integer, String> userTypes = getUserTypes();
 		ResultSet result = QueryHelper.findUserByEmail(login);
@@ -81,10 +81,6 @@ public class UserDB extends BaseDB{
 		return null;
 	}
 	
-	public static boolean createUser(HashMap<String, String> userParams) {
-		return QueryHelper.createUser(userParams);
-	}
-	
 	public static HashMap <Integer, String> getUserTypes() {
 		HashMap< Integer, String> map = new HashMap<>();
 		ResultSet result = QueryHelper.findUserTypes();
@@ -105,6 +101,16 @@ public class UserDB extends BaseDB{
 		if (result != null) {
 			User u = UserDB.findUser(result.getString("email"));
 			return (Owner) u;
+		}
+		
+		return null;
+	}
+	
+	public static Evaluator getEvaluatorById(int id) throws SQLException {
+		ResultSet result = QueryHelper.findUserById(id);
+		if (result != null) {
+			User u = UserDB.findUser(result.getString("email"));
+			return (Evaluator) u;
 		}
 		
 		return null;

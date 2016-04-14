@@ -99,5 +99,8 @@ public class SQLQueries
 	static final String ADD_PROJECT = "INSERT INTO projects (acronym, description, funding_duration_days, budget, owner_id, category_id, created_at, updated_at)"
 			+ "VALUES (?, ?, ?, ? , ?, ?, ?, ?)";
 	
+	static final String GET_USER_PROJECTS = "SELECT * FROM projects WHERE owner_id = ?";
+	
+	static final String GET_PROJECT_EVALUATIONS = "SELECT * FROM evaluations WHERE project_id = ?";
 	
 }

@@ -20,6 +20,7 @@ public class Project implements Serializable {
 	private Category category;
 	private List<Evaluation> evaluations;
 	private List<Document> documents;
+	private int id;
 
 	public Project(String acronym, String description, int fundingDuration,
 			double budget, Owner owner, Category category) throws InvalidDataException {
@@ -33,12 +34,20 @@ public class Project implements Serializable {
 		setEvaluations(new LinkedList<>());
 		setDocuments(new LinkedList<>());
 	}
-
+	
+	public int getId() {
+		return this.id;
+	}
+	
+	public void setId(int id) {
+		this.id = id;
+	}
+ 
 	public void setDocuments(List<Document> documents) {
 		this.documents = documents;
 	}
 
-	private void setEvaluations(List<Evaluation> evaluations) {
+	public void setEvaluations(List<Evaluation> evaluations) {
 		this.evaluations = evaluations;
 	}
 

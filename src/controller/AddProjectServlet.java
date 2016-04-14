@@ -1,16 +1,12 @@
 package controller;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.HashMap;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-
-import model.Category;
 import model.Project;
 import model.db.CategoryDB;
 import model.db.ProjectDB;
@@ -50,7 +46,6 @@ public class AddProjectServlet extends BaseServlet {
 		request.setAttribute("project_params", projectParams);
 		
 		String errorMessage = "";
-		
 		try {
 			Double.parseDouble(request.getParameter("budget"));
 		} catch (NumberFormatException e) {
@@ -64,7 +59,6 @@ public class AddProjectServlet extends BaseServlet {
 		}
 		
 		try {
-			
 			if (!errorMessage.isEmpty()) {
 				throw new Exception(errorMessage);
 			}
@@ -73,7 +67,7 @@ public class AddProjectServlet extends BaseServlet {
 			Project p = ProjectDB.findProjectByAcronym(request.getParameter("acronym"));
 			if (p != null) {
 				//skip to the exception block
-				throw new Exception ("This project idea has been previously created");
+				throw new Exception ("A project idea with this name has been previously created");
 			}
 			
 			if (QueryHelper.createProject(projectParams)) {

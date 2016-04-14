@@ -142,4 +142,16 @@ public class QueryHelper {
 			return false;
 		}
 	}
+	
+	public static ResultSet getOwnerProjects(int ownerId) throws SQLException {
+		preparedStatement = connection.prepareStatement(SQLQueries.GET_USER_PROJECTS);
+		preparedStatement.setInt(1, ownerId);
+		return preparedStatement.executeQuery();
+	}
+	
+	public static ResultSet getProjectEvaluations(int projectId) throws SQLException {
+		preparedStatement = connection.prepareStatement(SQLQueries.GET_PROJECT_EVALUATIONS);
+		preparedStatement.setInt(1, projectId);
+		return preparedStatement.executeQuery();
+	}
 }

@@ -24,20 +24,35 @@ public class ProjectDB extends BaseDB{
 		projects.put(project.getAcronym(), project);
 	}
 
-	public static Project getProject(String acronym) throws DatabaseAccessError {
-		
-		return projects.get(acronym);
+	public static Project getProject(String acronym) throws DatabaseAccessError, InvalidDataException {
+		return ProjectDB.findProjectByAcronym(acronym);
 	}
 
-	public static List<Project> getProjectsOfOwner(Owner owner) throws DatabaseAccessError {
-
+	public static List<Project> getProjectsOfOwner(Owner owner) throws DatabaseAccessError, InvalidDataException {
 		List<Project> projectsOfOwner = new LinkedList<Project>();
-
-		for (Project p : projects.values()) {
-			if (p.getOwner().equals(owner)) {
-				projectsOfOwner.add(p);
+		
+		try {
+			ResultSet result = QueryHelper.getOwnerProjects(owner.getId());
+			System.out.println(result);
+			if (result != null) {
+				while (result.next()) {
+					Project p = new Project(
+							result.getString("acronym"), 
+							result.getString("description"), 
+							result.getInt("funding_duration_days"), 
+							result.getDouble("budget"), 
+							owner, 
+							CategoryDB.getCategorybyId(result.getInt("category_id")));
+					
+					p.setId(result.getInt("id"));
+					p.setEvaluations(EvaluationDB.getProjectsEvaluations(p));
+					projectsOfOwner.add(p);
+				}
 			}
+		} catch (SQLException e) {
+			e.printStackTrace();
 		}
+		System.out.println(projectsOfOwner.size());
 		return projectsOfOwner;
 
 	}

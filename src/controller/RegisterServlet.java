@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import model.User;
+import model.db.QueryHelper;
 import model.db.TableSetup;
 import model.db.UserDB;
 
@@ -56,7 +57,7 @@ public class RegisterServlet extends BaseServlet {
 				throw new Exception ("A user with that email already exists");
 			}
 			
-			if (UserDB.createUser(userParams)) {
+			if (QueryHelper.createUser(userParams)) {
 				request.setAttribute("created", true);
 			} else {
 				request.setAttribute("error_message", UserDB.getLastErrorMessage());

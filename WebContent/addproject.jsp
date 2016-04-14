@@ -57,7 +57,9 @@
 								if (map != null) {
 									for (Integer i: map.keySet()) {
 									%>
-									<option value="<%= i %>" <% if (String.valueOf(i).equalsIgnoreCase(category_id)) out.print("selected = 'selected'"); %>><%= map.get(i).getDescription() %></option>
+									<option value="<%= i %>" <% if (String.valueOf(i).equalsIgnoreCase(category_id)) { out.print("selected = 'selected'"); } %>>
+										<% out.print(map.get(i).getDescription()); %>
+									</option>
 									<%
 									}
 								}

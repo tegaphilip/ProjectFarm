@@ -9,8 +9,6 @@ import java.util.List;
 import java.util.Map;
 
 import model.Category;
-import model.Owner;
-import model.User;
 import model.db.exception.DatabaseAccessError;
 
 public class CategoryDB {
