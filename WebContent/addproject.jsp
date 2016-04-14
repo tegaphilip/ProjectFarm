@@ -2,6 +2,20 @@
 <%@ page import="java.util.HashMap" %>
 <%@ page import="model.Category" %>
 
+<%
+	HashMap <Integer, Category> map = (HashMap <Integer, Category>) request.getAttribute("categories");
+	HashMap<String, String> projectParams = new HashMap<>();
+    String acronym = "", description = "", category_id = "", funding_duration_days = "", budget = ""; 
+	if (request.getAttribute("project_params") != null) {
+		projectParams = (HashMap<String, String>) request.getAttribute("project_params");
+		acronym = projectParams.get("acronym");
+		description = projectParams.get("description");
+		category_id = projectParams.get("category_id");
+		funding_duration_days = projectParams.get("funding_duration_days");
+		budget = projectParams.get("budget");
+	}
+%>
+
 <jsp:include page="/utils/header.jsp">
 	<jsp:param name="title" value="ProjectFarm" />
 	<jsp:param name="page" value="/index.jsp" />
@@ -27,12 +41,12 @@
 					
 					<div class="form-group">
 						<label for="acronym">Title:</label> 
-						<input type="text" class="form-control" name="acronym" required="required">
+						<input type="text" class="form-control" name="acronym" required="required" value="<%= acronym %>">
 					</div>
 					
 					<div class="form-group">
 						<label for="description">Description:</label>
-						<textarea class="form-control" rows="" cols="" name="description" required="required"></textarea>
+						<textarea class="form-control" rows="" cols="" name="description" required="required"><%= description %></textarea>
 					</div>
 					
 					<div class="form-group">
@@ -40,11 +54,10 @@
 						<select class="form-control" name="category_id" required="required">
 							<option value="">Select</option>
 							<%
-								HashMap <Integer, Category> map = (HashMap <Integer, Category>) request.getAttribute("categories");
 								if (map != null) {
 									for (Integer i: map.keySet()) {
 									%>
-									<option value="<%= i %>"><%= map.get(i).getDescription() %></option>
+									<option value="<%= i %>" <% if (String.valueOf(i).equalsIgnoreCase(category_id)) out.print("selected = 'selected'"); %>><%= map.get(i).getDescription() %></option>
 									<%
 									}
 								}
@@ -54,12 +67,12 @@
 					
 					<div class="form-group">
 						<label for="funding_duration_days">Incubation (# of days):</label> 
-						<input type="text" class="form-control" name="funding_duration_days" required="required">
+						<input type="number" class="form-control" name="funding_duration_days" required="required" value = "<%= funding_duration_days %>">
 					</div>
 					
 					<div class="form-group">
-						<label for="budget">Budget (€):</label> 
-						<input type="text" class="form-control" name="budget" required="required">
+						<label for="budget">Budget (Euro):</label> 
+						<input type="number" class="form-control" name="budget" required="required" value="<%= budget %>">
 					</div>
 					
 					<button type="submit" class="btn btn-default" name="AddProject">Submit</button>
