@@ -6,11 +6,11 @@
 	<jsp:param name="page" value="/index.jsp" />
 </jsp:include>
 
-<div class="jumbotron">
+<div class="jumbotron centralize">
 	<h1>Welcome to ProjectFarm</h1>
 	<p>
 		<a href="<%= request.getContextPath()%>/register">
-			<button type="submit" class="btn btn-large">Sign Up</button>
+			<button type="submit" class="btn btn-default">Sign Up</button>
 		</a>
 	</p>       
 </div>

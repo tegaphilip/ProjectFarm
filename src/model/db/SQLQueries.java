@@ -71,11 +71,33 @@ public class SQLQueries
 	static final String INSERT_USER_TYPES = "INSERT INTO user_types (name) VALUES "
 			+ "('owner'), ('evaluator')";
 	
+	static final String INSERT_CATEGORIES = "INSERT INTO categories (description) VALUES "
+			+ "('entertainment'), ('education'), ('productivity'), ('travels & tourism'), ('others')";
+	
 	static final String FIND_USER_BY_EMAIL = "SELECT * FROM " + USERS_TABLE + " "
 			+ "WHERE email = ?";
+	
+	static final String FIND_USER_BY_ID = "SELECT * FROM " + USERS_TABLE + " "
+			+ "WHERE id = ?";
 	
 	static final String FIND_ALL_USER_TYPES = "SELECT * FROM " + USER_TYPE_TABLE;
 	
 	static final String CREATE_USER = "INSERT INTO users (name, email, password, user_type, created_at, updated_at)"
 			+ "VALUES (?, ?, ?, ? , ?, ?)";
+	
+	static final String FIND_ALL_CATEGORIES = "SELECT * FROM " + CATEGORIES_TABLE + " ORDER BY description ASC";
+	
+	static final String FIND_PROJECT_BY_ID = "SELECT * FROM " + PROJECTS_TABLE + " "
+			+ "WHERE id = ?";
+	
+	static final String FIND_PROJECT_BY_TITLE = "SELECT * FROM " + PROJECTS_TABLE + " "
+			+ "WHERE acronym = ?";
+	
+	static final String FIND_CATEGORY_BY_ID = "SELECT * FROM " + CATEGORIES_TABLE + " "
+			+ "WHERE id = ?";
+	
+	static final String ADD_PROJECT = "INSERT INTO projects (acronym, description, funding_duration_days, budget, owner_id, category_id, created_at, updated_at)"
+			+ "VALUES (?, ?, ?, ? , ?, ?, ?, ?)";
+	
+	
 }

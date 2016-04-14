@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import model.User;
+import model.db.TableSetup;
 import model.db.UserDB;
 import model.db.exception.DatabaseAccessError;
 
@@ -24,12 +25,9 @@ public class LoginServlet extends BaseServlet {
 	 */
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		// this will only be done once per session
-		BaseServlet.createTables(request);
-		
+		new TableSetup();
 		String email = request.getParameter("email");
 		String password = request.getParameter("password");
-		
 		
 		try {
 			User user = UserDB.checkLogin(email, password);
@@ -41,6 +39,7 @@ public class LoginServlet extends BaseServlet {
 			HttpSession session = request.getSession();
 			session.setAttribute("name", user.getName());
 			session.setAttribute("email", user.getEmail());
+			session.setAttribute("user_id", user.getId());
 			
 			//get user info
 			if (user.getUserType().equalsIgnoreCase(User.USER_TYPE_EVALUATOR)) {
@@ -48,7 +47,7 @@ public class LoginServlet extends BaseServlet {
 				request.getRequestDispatcher("/index.jsp").forward(request, response);
 			} else {
 				//send to user's page
-				response.sendRedirect(request.getContextPath() + "/myprojects");
+				response.sendRedirect(request.getContextPath() + "/home");
 			}
 			
 		} catch (DatabaseAccessError e) {
@@ -56,7 +55,7 @@ public class LoginServlet extends BaseServlet {
 			e.printStackTrace();
 		} catch (Exception e) {
 			request.setAttribute("error_message", e.getMessage());
-			request.getRequestDispatcher("/index.jsp").forward(request, response);
+			request.getRequestDispatcher("/signin.jsp").forward(request, response);
 			return;
 		}
 	}

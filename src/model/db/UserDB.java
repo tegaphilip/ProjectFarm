@@ -3,8 +3,6 @@ package model.db;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.Map;
 
 import model.Evaluator;
 import model.Owner;
@@ -12,29 +10,10 @@ import model.User;
 import model.db.exception.DatabaseAccessError;
 import util.Password;
 
-public class UserDB {
+public class UserDB extends BaseDB{
 
 	static final String USER_TYPE_OWNER = "owner";
 	static final String USER_TYPE_EVALUATOR = "evaluator";
-	
-	static String lastErrorMessage = "";
-	
-	private static Map<String, User> users;
-
-	static {
-		users = new LinkedHashMap<String, User>();
-		initializeUsersList();
-	}
-
-	private static void initializeUsersList() {
-		users.put("john@acme.com", new Owner("john@acme.com", "John Silver", "123"));
-		users.put("mary@acme.com", new Owner("mary@acme.com", "Mary Moon", "123"));
-		users.put("paul@acme.com", new Owner("paul@acme.com", "Paul McDonalds", "123"));
-
-		users.put("sarah@geek.com", new Evaluator("sarah@geek.com", "Sarah Logan", "456"));
-		users.put("thibault@geek.com", new Evaluator("thibault@geek.com", "Thibault Moulin", "456"));
-		users.put("george@geek.com", new Evaluator("george@geek.com", "George Papalodeminus", "456"));
-	}
 
 	public static User checkLogin(String login, String password) throws DatabaseAccessError{
 		User u = UserDB.findUser(login);
@@ -87,9 +66,13 @@ public class UserDB {
 				String password = result.getString("password");
 				
 				if (userTypes.get(type).equalsIgnoreCase(USER_TYPE_OWNER)) {
-					return new Owner(email, name, password);
+					Owner owner = new Owner(email, name, password);
+					owner.setId(result.getInt("id"));
+					return owner;
 				} else if (userTypes.get(type).equalsIgnoreCase(USER_TYPE_OWNER)) {
-					return new Evaluator(email, name, password);
+					Evaluator evaluator = new Evaluator(email, name, password);
+					evaluator.setId(result.getInt("id"));
+					return evaluator;
 				}
 			} 
 		} catch (SQLException e) {
@@ -117,7 +100,13 @@ public class UserDB {
 		return map;
 	}
 	
-	public static String getLastErrorMessage() {
-		return UserDB.lastErrorMessage;
+	public static Owner getOwnerById(int id) throws SQLException {
+		ResultSet result = QueryHelper.findUserById(id);
+		if (result != null) {
+			User u = UserDB.findUser(result.getString("email"));
+			return (Owner) u;
+		}
+		
+		return null;
 	}
 }

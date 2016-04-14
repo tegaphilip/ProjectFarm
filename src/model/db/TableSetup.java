@@ -6,6 +6,8 @@ import java.sql.Statement;
 
 import javax.naming.NamingException;
 
+import util.FileUtil;
+
 public class TableSetup {
 	
 	private Connection dbConn;
@@ -17,6 +19,11 @@ public class TableSetup {
 	
 	private void createTables() {
 		try {
+			
+			if (FileUtil.checkIfFileExists()) {
+				return;
+			}
+			
 			dbConn = DBUtil.getDefaultConnection();
 			
 			if (!checkIfExists(SQLQueries.USER_TYPE_TABLE)) {
@@ -32,6 +39,7 @@ public class TableSetup {
 			
 			if (!checkIfExists(SQLQueries.CATEGORIES_TABLE)) {
 				executeDDL(SQLQueries.CREATE_CATEGORIES_TABLE);
+				executeInsert(SQLQueries.INSERT_CATEGORIES);
 			}
 			
 			if (checkIfExists(SQLQueries.USERS_TABLE) && checkIfExists(SQLQueries.CATEGORIES_TABLE)) {
@@ -52,12 +60,14 @@ public class TableSetup {
 				}
 			}
 			
-			
+			FileUtil.createFile();
 		} catch (ClassNotFoundException | SQLException | NamingException e) {
 			e.printStackTrace();
 		} finally {
 			try {
-				dbConn.close();
+				if (dbConn != null) {
+					dbConn.close();
+				}
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}

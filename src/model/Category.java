@@ -8,8 +8,15 @@ public class Category implements Serializable {
 
 	private String description;
 	
+	private int id;
+	
 	public Category(String description) {
 		setDescription(description);
+	}
+	
+	public Category(String description, int id) {
+		setDescription(description);
+		setId(id);
 	}
 
 	public String getDescription() {
@@ -18,6 +25,14 @@ public class Category implements Serializable {
 
 	public void setDescription(String description) {
 		this.description = description;
+	}
+	
+	public void setId(int id) {
+		this.id = id;
+	}
+	
+	public int getId() {
+		return id;
 	}
 
 	@Override

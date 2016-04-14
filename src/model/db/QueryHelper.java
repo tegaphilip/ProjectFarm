@@ -35,6 +35,17 @@ public class QueryHelper {
 		}
 	}
 	
+	public static ResultSet findUserById(int id) 
+	{
+		try {
+			preparedStatement = connection.prepareStatement(SQLQueries.FIND_USER_BY_ID);
+			preparedStatement.setInt(1, id);
+			return preparedStatement.executeQuery();
+		} catch (SQLException e) {
+			return null;
+		}
+	}
+	
 	public static ResultSet findUserTypes() {
 		try {
 			preparedStatement = connection.prepareStatement(SQLQueries.FIND_ALL_USER_TYPES);
@@ -56,12 +67,78 @@ public class QueryHelper {
 			preparedStatement.setString(6, DateUtil.getCurrentDateTime());
 			int result = preparedStatement.executeUpdate();
 			if (result == 0) {
-				UserDB.lastErrorMessage = "User was not successfully created!";
+				BaseDB.lastErrorMessage = "User was not successfully created!";
 				return false;
 			}
 			return true;
 		} catch (Exception e) {
-			UserDB.lastErrorMessage = e.getMessage();
+			BaseDB.lastErrorMessage = e.getMessage();
+			return false;
+		}
+	}
+	
+	public static ResultSet getCategories() {
+		try {
+			preparedStatement = connection.prepareStatement(SQLQueries.FIND_ALL_CATEGORIES);
+			return preparedStatement.executeQuery();
+		} catch (SQLException e) {
+			return null;
+		}
+	}
+	
+	public static ResultSet findProjectById(int id) 
+	{
+		try {
+			preparedStatement = connection.prepareStatement(SQLQueries.FIND_PROJECT_BY_ID);
+			preparedStatement.setInt(1, id);
+			return preparedStatement.executeQuery();
+		} catch (SQLException e) {
+			return null;
+		}
+	}
+	
+	public static ResultSet findProjectByAcronym(String acronym) 
+	{
+		try {
+			preparedStatement = connection.prepareStatement(SQLQueries.FIND_PROJECT_BY_TITLE);
+			preparedStatement.setString(1, acronym);
+			return preparedStatement.executeQuery();
+		} catch (SQLException e) {
+			return null;
+		}
+	}
+	
+	public static ResultSet findCategoryById(int id) 
+	{
+		try {
+			preparedStatement = connection.prepareStatement(SQLQueries.FIND_CATEGORY_BY_ID);
+			preparedStatement.setInt(1, id);
+			return preparedStatement.executeQuery();
+		} catch (SQLException e) {
+			return null;
+		}
+	}
+	
+	public static boolean createProject(HashMap<String, String> projectParams) {
+		try {
+			preparedStatement = connection.prepareStatement(SQLQueries.ADD_PROJECT);
+			preparedStatement.setString(1, projectParams.get("acronym"));
+			preparedStatement.setString(2, projectParams.get("description"));
+			preparedStatement.setInt(3, Integer.valueOf(projectParams.get("funding_duration_days")));
+			preparedStatement.setDouble(4, Double.valueOf(projectParams.get("budget")));
+			preparedStatement.setInt(5, Integer.valueOf(projectParams.get("owner_id")));
+			preparedStatement.setInt(6, Integer.valueOf(projectParams.get("category_id")));
+			preparedStatement.setString(7, DateUtil.getCurrentDateTime());
+			preparedStatement.setString(8, DateUtil.getCurrentDateTime());
+			int result = preparedStatement.executeUpdate();
+			
+			if (result == 0) {
+				BaseDB.lastErrorMessage = "Project was not successfully created!";
+				return false;
+			}
+			return true;
+		} catch (Exception e) {
+			BaseDB.lastErrorMessage = e.getMessage();
 			return false;
 		}
 	}

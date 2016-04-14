@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import model.User;
+import model.db.TableSetup;
 import model.db.UserDB;
 
 /**
@@ -25,8 +26,7 @@ public class RegisterServlet extends BaseServlet {
 	 */
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		// this will only be done once per session
-		BaseServlet.createTables(request);
+		new TableSetup();
 		HttpSession session = request.getSession();
 		if (session.getAttribute("name") != null) {
 			//user already logged in

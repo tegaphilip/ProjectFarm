@@ -6,6 +6,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="<%= request.getContextPath()%>/ext/bootstrap/3.2.2/css/bootstrap.min.css">
+<link rel="stylesheet" href="<%= request.getContextPath()%>/ext/bootstrap/3.2.2/css/additions.css">
 <script src="<%= request.getContextPath()%>/ext/jquery/1.11.2/jquery-1.11.2.js"></script>
 <script src="<%= request.getContextPath()%>/ext/bootstrap/3.2.2/js/bootstrap.min.js"></script>
 </head>
@@ -27,7 +28,7 @@
     		<input type="email" placeholder="Email" name="email">
     		<input type="password" placeholder="Password" name="password">
     		<input type="hidden" name="pageSuccess"  value='<%= request.getParameter("page")%>'/>
-    		<button type="submit" class="btn">Sign in</button>
+    		<button type="submit" class="btn btn-default">Sign in</button>
 		</form>
 		<% } else { %>
 		<ul class="nav navbar-nav navbar-right">
@@ -35,8 +36,8 @@
           <a class="dropdown-toggle" data-toggle="dropdown" href="#">Welcome <%= session.getAttribute("name")%>
           <span class="caret"></span></a>
           <ul class="dropdown-menu">
-            <li><a href="<%= request.getContextPath()%>/courseinfo/overview.jsp">My Projects</a></li>
-            <li><a href="<%= request.getContextPath()%>/courseinfo/program.jsp">Sign Out</a></li>            
+            <li><a href="<%= request.getContextPath()%>/myprojects">My Projects</a></li>
+            <li><a href="<%= request.getContextPath()%>/logout">Sign Out</a></li>            
           </ul>
         </li>
         </ul>			

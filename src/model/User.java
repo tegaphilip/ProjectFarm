@@ -14,6 +14,8 @@ public abstract class User implements Serializable {
 
 	private String password;
 	private String userType;
+	
+	private int id;
 
 	public User(String email, String name, String password, String userType) {
 		setEmail(email);
@@ -52,6 +54,14 @@ public abstract class User implements Serializable {
 	
 	public void setUserType(String userType) {
 		this.userType = userType;
+	}
+	
+	public void setId(int id) {
+		this.id = id;
+	}
+	
+	public int getId() {
+		return id;
 	}
 
 	@Override
