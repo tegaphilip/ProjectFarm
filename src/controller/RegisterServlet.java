@@ -15,7 +15,7 @@ import model.db.TableSetup;
 import model.db.UserDB;
 
 /**
- * Servlet implementation class LoginServlet
+ * Servlet implementation class RegisterServlet
  */
 @WebServlet("/register")
 public class RegisterServlet extends BaseServlet {

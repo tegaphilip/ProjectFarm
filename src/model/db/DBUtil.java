@@ -30,7 +30,6 @@ public class DBUtil {
 		ds = (DataSource) ctx.lookup(resourceName);
 		return ds;
 	}
-	
 
 	public static Connection getMysqlConnection() throws ClassNotFoundException,
 			SQLException, NamingException {
@@ -44,7 +43,7 @@ public class DBUtil {
 	
 	public static Connection getDefaultConnection() throws ClassNotFoundException, SQLException, NamingException {
 		return getSqliteConnection();
-		//return getMysqlConnection();
+//		return getMysqlConnection();
 	}
 }
 

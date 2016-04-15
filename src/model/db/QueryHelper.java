@@ -154,4 +154,29 @@ public class QueryHelper {
 		preparedStatement.setInt(1, projectId);
 		return preparedStatement.executeQuery();
 	}
+	
+	public static ResultSet getProjectDocuments(int projectId) throws SQLException {
+		preparedStatement = connection.prepareStatement(SQLQueries.GET_PROJECT_DOCUMENTS);
+		preparedStatement.setInt(1, projectId);
+		return preparedStatement.executeQuery();
+	}
+	
+	public static boolean addDocument(String documentPath, int projectId) {
+		try {
+			preparedStatement = connection.prepareStatement(SQLQueries.ADD_DOCUMENT);
+			preparedStatement.setString(1, documentPath);
+			preparedStatement.setInt(2, projectId);
+			preparedStatement.setString(3, DateUtil.getCurrentDateTime());
+			int result = preparedStatement.executeUpdate();
+			
+			if (result == 0) {
+				BaseDB.lastErrorMessage = "Project was not successfully created!";
+				return false;
+			}
+			return true;
+		} catch (Exception e) {
+			BaseDB.lastErrorMessage = e.getMessage();
+			return false;
+		}
+	}
 }

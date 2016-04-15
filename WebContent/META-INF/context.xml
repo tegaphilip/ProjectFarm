@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<Context path="/ProjectFarm">
+<Context path="/ProjectFarm" allowCasualMultipartParsing="true">
 
 	<Resource auth="Container"
 		driverClassName="com.mysql.jdbc.Driver" 

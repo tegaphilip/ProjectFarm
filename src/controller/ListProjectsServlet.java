@@ -14,7 +14,7 @@ import model.db.exception.DatabaseAccessError;
 import model.exception.InvalidDataException;
 
 /**
- * Servlet implementation class LoginServlet
+ * Servlet implementation class ListProjectsServlet
  */
 @WebServlet("/myprojects")
 public class ListProjectsServlet extends BaseServlet {

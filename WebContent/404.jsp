@@ -1,9 +1,3 @@
-<%
-	if (session.getAttribute("user_id") != null) {
-		response.sendRedirect(request.getContextPath() + "/home");
-	}
-%>
-
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 
@@ -13,10 +7,10 @@
 </jsp:include>
 
 <div class="jumbotron centralize">
-	<h1>Welcome to ProjectFarm</h1>
+	<h1>Looks like you got lost. Don't worry, we got you!</h1>
 	<p>
-		<a href="<%= request.getContextPath()%>/register">
-			<button type="submit" class="btn btn-default">Sign Up</button>
+		<a href="<%= request.getContextPath()%>/">
+			Go back Home
 		</a>
 	</p>       
 </div>

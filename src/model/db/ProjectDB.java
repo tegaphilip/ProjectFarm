@@ -33,7 +33,6 @@ public class ProjectDB extends BaseDB{
 		
 		try {
 			ResultSet result = QueryHelper.getOwnerProjects(owner.getId());
-			System.out.println(result);
 			if (result != null) {
 				while (result.next()) {
 					Project p = new Project(
@@ -46,31 +45,35 @@ public class ProjectDB extends BaseDB{
 					
 					p.setId(result.getInt("id"));
 					p.setEvaluations(EvaluationDB.getProjectsEvaluations(p));
+					p.setDocuments(DocumentDB.getProjectDocuments(p));
 					projectsOfOwner.add(p);
 				}
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		System.out.println(projectsOfOwner.size());
 		return projectsOfOwner;
-
 	}
 	
 	public static List<Project> getAllProjects() throws DatabaseAccessError {
 		return new LinkedList<Project>(projects.values());
 	}
 	
-	public static Project findProjectById(int projectId) throws InvalidDataException {
+	public static Project findProjectById(int projectId) throws InvalidDataException, DatabaseAccessError {
 		ResultSet result = QueryHelper.findProjectById(projectId);
 		try {
 			if (result != null && result.next()) {
-				return new Project(result.getString("acronym"), 
+				Project p = new Project(result.getString("acronym"), 
 						result.getString("description"), 
 						result.getInt("funding_duration_days"),
 						result.getDouble("budget"),
 						UserDB.getOwnerById(result.getInt("owner_id")),
 						CategoryDB.getCategorybyId(result.getInt("category_id")));
+				
+				p.setId(result.getInt("id"));
+				p.setEvaluations(EvaluationDB.getProjectsEvaluations(p));
+				p.setDocuments(DocumentDB.getProjectDocuments(p));
+				return p;
 			} 
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -78,7 +81,7 @@ public class ProjectDB extends BaseDB{
 		return null;
 	}
 	
-	public static Project findProjectByAcronym(String acronym) throws InvalidDataException {
+	public static Project findProjectByAcronym(String acronym) throws InvalidDataException, DatabaseAccessError {
 		ResultSet result = QueryHelper.findProjectByAcronym(acronym);
 		try {
 			if (result != null && result.next()) {

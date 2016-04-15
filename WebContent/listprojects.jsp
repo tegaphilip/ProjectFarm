@@ -71,7 +71,7 @@
 					%>
 					
 					<tr>
-						<td><%= p.getAcronym() %></td>
+						<td><a href="<%= request.getContextPath()%>/project?project_id=<%= p.getId() %>"><%= p.getAcronym() %></a></td>
 						<td><%= p.getCategory().getDescription() %></td>
 						<td><%= p.getFundingDuration() %></td>
 						<td><%= p.getBudget() %></td>

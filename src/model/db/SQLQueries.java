@@ -103,4 +103,9 @@ public class SQLQueries
 	
 	static final String GET_PROJECT_EVALUATIONS = "SELECT * FROM evaluations WHERE project_id = ?";
 	
+	static final String GET_PROJECT_DOCUMENTS = "SELECT * FROM documents WHERE project_id = ?";
+	
+	static final String ADD_DOCUMENT = "INSERT INTO documents (document_path, project_id, created_at)"
+			+ "VALUES (?, ?, ?)";
+	
 }

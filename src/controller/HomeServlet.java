@@ -7,7 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Servlet implementation class LoginServlet
+ * Servlet implementation class HomeServlet
  */
 @WebServlet("/home")
 public class HomeServlet extends BaseServlet {
