@@ -34,17 +34,17 @@ public class LoginServlet extends BaseServlet {
 			if (user == null) {
 				throw new Exception("Invalid login details supplied");
 			}
-			
 			//set logged in sessions 
 			HttpSession session = request.getSession();
 			session.setAttribute("name", user.getName());
 			session.setAttribute("email", user.getEmail());
 			session.setAttribute("user_id", user.getId());
+			session.setAttribute("user_type", user.getUserType());
 			
-			//get user info
+			//check user type info
 			if (user.getUserType().equalsIgnoreCase(User.USER_TYPE_EVALUATOR)) {
 				//send to evaluators page
-				request.getRequestDispatcher("/index.jsp").forward(request, response);
+				response.sendRedirect(request.getContextPath() + "/allprojects");
 			} else {
 				//send to user's page
 				response.sendRedirect(request.getContextPath() + "/home");

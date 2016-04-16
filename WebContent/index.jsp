@@ -1,6 +1,12 @@
+<%@page import="model.User"%>
 <%
-	if (session.getAttribute("user_id") != null) {
-		response.sendRedirect(request.getContextPath() + "/home");
+	if (session.getAttribute("user_id") != null && session.getAttribute("user_type") != null) {
+		String type = String.valueOf(session.getAttribute("user_type"));
+		if (type.equalsIgnoreCase(User.USER_TYPE_EVALUATOR)) {
+			response.sendRedirect(request.getContextPath() + "/allprojects");
+		} else {
+			response.sendRedirect(request.getContextPath() + "/home");
+		}
 	}
 %>
 

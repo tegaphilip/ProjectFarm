@@ -18,9 +18,11 @@ public class UserDB extends BaseDB{
 
 	public static User checkLogin(String login, String password) throws DatabaseAccessError{
 		User u = UserDB.findUser(login);
+		System.out.println(u);
 		if (u == null) {
 			return null;
 		}
+		System.out.println(u.getName());
 		
 		try {
 			 if (Password.check(password, u.getPassword())) {
@@ -69,12 +71,12 @@ public class UserDB extends BaseDB{
 					Owner owner = new Owner(email, name, password);
 					owner.setId(result.getInt("id"));
 					return owner;
-				} else if (userTypes.get(type).equalsIgnoreCase(USER_TYPE_OWNER)) {
+				} else if (userTypes.get(type).equalsIgnoreCase(USER_TYPE_EVALUATOR)) {
 					Evaluator evaluator = new Evaluator(email, name, password);
 					evaluator.setId(result.getInt("id"));
 					return evaluator;
 				}
-			} 
+			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

@@ -33,7 +33,10 @@
 					<div>
 						<% 
 							Object error = request.getAttribute("error_message");
-							if (error != null) {
+							Object success = request.getAttribute("created");
+							if (success != null) {
+								out.print("<td colspan='6'><span class='alert-success'>Your project has been added</span></td>");
+							} else if (error != null) {
 								out.print("<p class='alert-danger'>" + error + "</p>");
 							}
 						%>

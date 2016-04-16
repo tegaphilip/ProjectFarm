@@ -33,11 +33,11 @@ public class RegisterServlet extends BaseServlet {
 			//user already logged in
 			response.sendRedirect(request.getContextPath() + "/myprojects");
 		}
+		request.setAttribute("user_types", UserDB.getUserTypes());
 		
 		String register = request.getParameter("Register");
 		if (register == null) {
 			// retrieve user types needed for registration
-			request.setAttribute("user_types", UserDB.getUserTypes());
 			request.getRequestDispatcher("/signup.jsp").forward(request, response);
 			return;
 		}

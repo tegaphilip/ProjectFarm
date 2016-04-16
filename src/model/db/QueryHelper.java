@@ -149,6 +149,11 @@ public class QueryHelper {
 		return preparedStatement.executeQuery();
 	}
 	
+	public static ResultSet getAllProjects() throws SQLException {
+		preparedStatement = connection.prepareStatement(SQLQueries.GET_ALL_PROJECTS);
+		return preparedStatement.executeQuery();
+	}
+	
 	public static ResultSet getProjectEvaluations(int projectId) throws SQLException {
 		preparedStatement = connection.prepareStatement(SQLQueries.GET_PROJECT_EVALUATIONS);
 		preparedStatement.setInt(1, projectId);
@@ -170,7 +175,28 @@ public class QueryHelper {
 			int result = preparedStatement.executeUpdate();
 			
 			if (result == 0) {
-				BaseDB.lastErrorMessage = "Project was not successfully created!";
+				BaseDB.lastErrorMessage = "Document was not successfully added!";
+				return false;
+			}
+			return true;
+		} catch (Exception e) {
+			BaseDB.lastErrorMessage = e.getMessage();
+			return false;
+		}
+	}
+	
+	public static boolean addEvaluation(int projectId, int evaluatorId, int riskLevel, int attractiveness) {
+		try {
+			preparedStatement = connection.prepareStatement(SQLQueries.ADD_EVALUATION);
+			preparedStatement.setInt(1, projectId);
+			preparedStatement.setInt(2, evaluatorId);
+			preparedStatement.setInt(3, riskLevel);
+			preparedStatement.setInt(4, attractiveness);
+			preparedStatement.setString(5, DateUtil.getCurrentDateTime());
+			int result = preparedStatement.executeUpdate();
+			
+			if (result == 0) {
+				BaseDB.lastErrorMessage = "Evaluation was not successfully added!";
 				return false;
 			}
 			return true;

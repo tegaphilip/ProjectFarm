@@ -101,11 +101,16 @@ public class SQLQueries
 	
 	static final String GET_USER_PROJECTS = "SELECT * FROM projects WHERE owner_id = ?";
 	
+	static final String GET_ALL_PROJECTS = "SELECT * FROM projects";
+	
 	static final String GET_PROJECT_EVALUATIONS = "SELECT * FROM evaluations WHERE project_id = ?";
 	
 	static final String GET_PROJECT_DOCUMENTS = "SELECT * FROM documents WHERE project_id = ?";
 	
 	static final String ADD_DOCUMENT = "INSERT INTO documents (document_path, project_id, created_at)"
 			+ "VALUES (?, ?, ?)";
+	
+	static final String ADD_EVALUATION = "INSERT INTO evaluations (project_id, evaluator_id, risk_level, attractiveness, created_at)"
+			+ "VALUES (?, ?, ?, ?, ?)";
 	
 }
