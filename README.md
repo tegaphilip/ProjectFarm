@@ -11,9 +11,9 @@ Contributors
 
 Dependencies
 ------------
-* commons-codec jar
-* mysql jdbc connector jar
-* sqlite jdbc connector jar
+* commons-codec-1.10.jar (https://commons.apache.org/proper/commons-codec/download_codec.cgi)
+* mysql-connector-java-5.1.34-bin.jar ( https://dev.mysql.com/downloads/connector/j/5.0.html)
+* sqlite-jdbc-3.8.11.2.jar (https://bitbucket.org/xerial/sqlite-jdbc/downloads)
 
 
 Notes
