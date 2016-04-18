@@ -20,7 +20,11 @@ public class TableSetup {
 	private void createTables() {
 		try {
 			
-			if (FileUtil.checkIfFileExists()) {
+			if (FileUtil.checkIfFileExists(FileUtil.SQLITE_FILE_NAME) && DBUtil.dataSourceType.equalsIgnoreCase(DBUtil.SQLITE)) {
+				return;
+			}
+			
+			if (FileUtil.checkIfFileExists(FileUtil.MYSQL_FILE_NAME) && DBUtil.dataSourceType.equalsIgnoreCase(DBUtil.MYSQL)) {
 				return;
 			}
 			
@@ -60,7 +64,14 @@ public class TableSetup {
 				}
 			}
 			
-			FileUtil.createFile();
+			if (DBUtil.dataSourceType.equalsIgnoreCase(DBUtil.SQLITE)) {
+				FileUtil.createFile(FileUtil.SQLITE_FILE_NAME);
+			}
+			
+			if (DBUtil.dataSourceType.equalsIgnoreCase(DBUtil.MYSQL)) {
+				FileUtil.createFile(FileUtil.MYSQL_FILE_NAME);
+			}
+			
 		} catch (ClassNotFoundException | SQLException | NamingException e) {
 			e.printStackTrace();
 		} finally {
